@@ -13,8 +13,7 @@ from hareef.utils import find_last_checkpoint
 from lightning import Trainer
 from lightning.pytorch.callbacks import EarlyStopping, ModelCheckpoint
 from lightning.pytorch.plugins.precision import MixedPrecisionPlugin
-from pytorch_lightning.strategies import DDPStrategy
-
+from lightning.pytorch.strategies import strategy
 from .config import Config
 from .dataset import load_test_data, load_training_data, load_validation_data
 from .model import SarfModel
@@ -85,7 +84,7 @@ def main():
     trainer = Trainer(
         accelerator=args.accelerator,
         devices=args.devices,
-        strategy=DDPStrategy(find_unused_parameters=False),
+        strategy="ddp",
         check_val_every_n_epoch=config["evaluate_epochs"],
         callbacks=[
             wer_early_stop_callback,
