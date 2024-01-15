@@ -173,7 +173,7 @@ class SarfModel(LightningModule):
             self.log_dict({
                 k.replace("*", "_star"): v
                 for (k, v) in error_rates.items()
-            })
+            }, sync_dist=True)
             _LOGGER.info("Error Rates:\n" + format_error_rates_as_table(error_rates))
 
     def on_test_epoch_end(self) -> None:
