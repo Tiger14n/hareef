@@ -122,21 +122,21 @@ class SarfModel(LightningModule):
         metrics = self._process_batch(batch)
         for name, val in metrics.items():
             self.training_step_outputs.setdefault(name, []).append(val)
-            self.log(name, val)
+            self.log(name, val, sync_dist=True)
         return metrics["loss"]
 
     def validation_step(self, batch, batch_idx):
         metrics = self._process_batch(batch)
         for name, val in metrics.items():
             self.val_step_outputs.setdefault(f"val_{name}", []).append(val)
-            self.log(f"val_{name}", val)
+            self.log(f"val_{name}", val, sync_dist=True)
         return metrics
 
     def test_step(self, batch, batch_idx):
         metrics = self._process_batch(batch)
         for name, val in metrics.items():
             self.test_step_outputs.setdefault(f"test_{name}", []).append(val)
-            self.log(f"test_{name}", val)
+            self.log(f"test_{name}", val, sync_dist=True)
         return metrics
 
     def configure_optimizers(self):
@@ -191,7 +191,7 @@ class SarfModel(LightningModule):
     def _log_epoch_metrics(self, metrics):
         for name, values in metrics.items():
             epoch_metric_mean = torch.stack(values).mean()
-            self.log(name, epoch_metric_mean)
+            self.log(name, epoch_metric_mean, sync_dist=True)
             values.clear()
 
     def _process_batch(self, batch):
