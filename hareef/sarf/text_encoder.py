@@ -16,6 +16,7 @@ from hareef.constants import (
     DIACRITIC_LABELS,
 )
 
+ALL_VALID_DIACRITICS = {'', 'ُ', 'َ',"ّ", 'ٌ', 'ِ', 'ٌّ', 'ًّ', 'ً', 'ْ', 'ِّ', 'ٍّ', 'ُّ', 'َّ', 'ٍ'}
 
 PAD = "_"
 INPUT_TOKENS = [
