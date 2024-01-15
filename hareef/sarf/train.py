@@ -85,7 +85,7 @@ def main():
     trainer = Trainer(
         accelerator=args.accelerator,
         devices=args.devices,
-        strategy=DDPStrategy(find_unused_parameters=False)
+        strategy=DDPStrategy(find_unused_parameters=False),
         check_val_every_n_epoch=config["evaluate_epochs"],
         callbacks=[
             wer_early_stop_callback,
